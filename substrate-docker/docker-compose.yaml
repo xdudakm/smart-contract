@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  substrate-node:
+    image: xdudakm/substrate-contracts-node
+    container_name: substrate-contracts-node
+    command: --rpc-external --name "Local substrate node"
+    ports:
+      - "127.0.0.1:9944:9944"
+      - "127.0.0.1:9933:9933"
+    volumes:
+      - node-data:/data
+    restart: unless-stopped
+
+volumes:
+  node-data:
