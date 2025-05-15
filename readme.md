@@ -119,6 +119,9 @@ If unexpected behaviour happens, open web browser console.
 Now your task is to change this smart contract to the one for selling e-books. We will just change the existing smart
 contract and frontend. The smart contract is just for demonstration, without using any balance when selling books.
 
+If your contract is not working, you can check against [dBook](https://github.com/xdudakm/dBook) repository, where is
+the contract as well as frontend for it.
+
 ### 1. Change smart contract
 
 1. Change storage to BookStore with following values:
@@ -126,7 +129,7 @@ contract and frontend. The smart contract is just for demonstration, without usi
 - books: Mapping<u32, Book>,
 - num_books: u32
 
-Book will have owner(AccountId), title, author_name, content_hash, price, and for_sale flag.
+Book will have id, owner(AccountId), title, author_name, content_hash, price, and for_sale flag.
 
 2. Implement the BookStore
 
