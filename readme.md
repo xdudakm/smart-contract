@@ -112,18 +112,21 @@ npm run dev -- --host
 8. Connect to your classmate via exposed ip. Vote on their smart contract and see what happens on the website.
 9. Inspect code of both smart contract and web app to see, what has happened under the hood.
 
+If unexpected behaviour happens, open web browser console.
+
 ## Customize the smart contract
 
-Now your task is to change this smart contract to the one for selling e-books.
+Now your task is to change this smart contract to the one for selling e-books. We will just change the existing smart
+contract and frontend. The smart contract is just for demonstration, without using any balance when selling books.
 
-### Change smart contract
+### 1. Change smart contract
 
 1. Change storage to BookStore with following values:
 
 - books: Mapping<u32, Book>,
 - num_books: u32
 
-Book will have owner(AccountId), title, author name, content hash, price, and sold flag.
+Book will have owner(AccountId), title, author_name, content_hash, price, and for_sale flag.
 
 2. Implement the BookStore
 
@@ -132,11 +135,35 @@ In constructor, initiate list of books you want to put on market.
 3. Create message functions
 
 - add_book(title, author, content_hash, price) -> Add book to the storage
-- buy(book_id) -> Change the book ownership in the contract storage and set it to sold.
-- sell(book_id) -> Change sold flag to false of existing book that is owned by the caller.
+- buy(book_id) -> Change the book ownership in the contract storage and set for_sale to false.
+- sell(book_id) -> Change for_sale flag to true of existing book that is owned by the caller.
 - get_content(book_id) -> Only the owner of the book can get the content
 - owned_books() -> List of books that are owned by the caller.
-- list_books() -> List of books that haven't been sold yet and are not owned by the caller.
+- books_for_sale() -> List of books that are for sale and are not owned by the caller.
 
-4. Deploy the smart contract
-5. Update frontend to interact with the newly deployed smart contract
+### 2. Deploy smart contract
+
+1. Build the smart contract with command
+
+```bash
+cargo contract build
+```
+
+2. Open [use.ink](https://ui.use.ink/)
+3. Upload .contract file
+4. Set contract name to dBook
+5. Add initial books
+6. Upload the contract
+
+### 3. Update frontend
+
+1. Copy generated .json contract and paste it in contract directory of web app.
+2. Copy address of deployed contract to variable VITE_APP_CONTRACT_ADDRESS in .env
+3. Use contract to query and transfer data:
+
+- contract.value.query.ownedBooks(address, {gasLimit})
+- contract.value.query.booksForSale(address, {gasLimit})
+- contract.value.query.getContent(address, {gasLimit}, book_id)
+- contract.value.tx.addBook({gasLimit}, newBook.title, newBook.author, newBook.content, newBook.price);
+- contract.value.tx.buy({gasLimit}, id);
+- contract.value.tx.buy({gasLimit}, id);
