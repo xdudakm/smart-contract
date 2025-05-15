@@ -1,12 +1,11 @@
 # Smart contract example
 
-This project is basically a dApp for elections - DeVot. On smart contract, candidates and votes are stored. One can vote
-using
-their wallet.
+This project is basically a dApp for decentralized voting - DeVot. On smart contract, candidates and votes are stored.
+One can vote using their wallet.
 
 The project contains 3 packages:
 
-1. [substrate-docekr](substrate-docker) - a docker-compose with substrate contract node for starting local blockchain
+1. [substrate-docker](substrate-docker) - a docker-compose with substrate contract node for starting local blockchain
    node
 2. [devot-contract](devot-contract) - a DeVot ink contract for elections, which contains candidates and votes
 3. [devot-web](devot-web) - a DeVot web interface for voting (interacting with the smart contract)
@@ -16,7 +15,7 @@ The project contains 3 packages:
 ### 1. Run blockchain locally
 
 Start substrate node contract node. It is a "blockchain", which contains support for smart contract. Run following
-command in [substrate-docekr](substrate-docker) folder
+command in [substrate-docker](substrate-docker) folder
 
 ``` bash
 docker compose -f ./substrate-docker/docker-compose.yaml up
