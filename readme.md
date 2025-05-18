@@ -72,8 +72,9 @@ Now, you can interact with the deployed contract from the web interface by calli
 
 1. Install [polkadot extension](https://polkadot.js.org/extension/)
 2. Create account from the extension
-3. As we are running development node, there are test users with some units. Transfer 10 units from test user to your
-   account from [accounts](https://polkadot.js.org/apps/#/accounts).
+3. In substrate-contract-node chain, each transaction requires som fees to prevent DoS attack or spam (it is possible to
+   turn it off by modifying substrate code). As we are running development node, there are test users with some units.
+   Transfer 10 units from test user to your account from [accounts](https://polkadot.js.org/apps/#/accounts).
 
 ### 4. Run dApp
 
