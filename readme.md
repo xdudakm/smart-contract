@@ -1,31 +1,40 @@
 # Smart contract example
 
-This project is basically a dApp for decentralized voting - DeVot. On smart contract, candidates and votes are stored.
-One can vote using their wallet.
+This project is a simple example of dApp for decentralized voting - DeVot. On smart contract, candidates and votes are
+stored. One can vote using their wallet.
 
-The project contains 3 packages:
+It is used as blockchain and smart contract demonstration for AASS lecture on FIIT STUBA.
+
+The repository consists of 3 packages:
 
 1. [substrate-docker](substrate-docker) - a docker-compose with substrate contract node for starting local blockchain
    node
 2. [devot-contract](devot-contract) - a DeVot ink contract for elections, which contains candidates and votes
 3. [devot-web](devot-web) - a DeVot web interface for voting (interacting with the smart contract)
 
+## Requirements (To speed up your work at lecture)
+
+1. This repository cloned locally on your machine
+2. Installed docker on your machine ([instructions](https://docs.docker.com/engine/install/))
+3. Downloaded substrate image (inside [substrate-docker](substrate-docker) folder, run `docker compose pull`)
+4. Installed rust compiler on your
+   machine ([instructions](https://doc.rust-lang.org/cargo/getting-started/installation.html))
+5. Installed cargo-contract (inside [devot-contract](devot-contract) folder, run `cargo install cargo-contract`)
+6. Build !ink smart contract (inside [devot-contract](devot-contract) folder, run `cargo contract build`)
+
 ## Run the DeVot dApp
 
-### 1. Run blockchain locally
+### 1. Run polkadot blockchain locally
 
 Start substrate node contract node. It is a "blockchain", which contains support for smart contract. Run following
-command in [substrate-docker](substrate-docker) folder
+command in root folder
 
 ``` bash
 docker compose -f ./substrate-docker/docker-compose.yaml up
 ```
 
-You can see the chain blocks from [polkadot.js.org](https://polkadot.js.org/apps).
-
-1. Open the website and
-2. Select Development Local Node from top left dropdown
-3. Click Switch
+You can see the chain blocks
+from [polkadot.js.org](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/explorer).
 
 ### 2. Deploy smart contract
 
@@ -56,17 +65,18 @@ with [.contract](devot-contract/target/ink/devot_contract.contract)
 and [.json](devot-contract/target/ink/devot_contract.json). This file contains all the information about the smart
 contract.
 
-For deploying and testing ink! smart contract, we can use [use.ink](https://ui.use.ink/)
+For deploying and testing ink! smart contract, we will
+use [polkadot.js](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/contracts/)
 
-1. Open https://ui.use.ink
-2. From top left dropdown, select Local Node
-3. Click Add new contract
-4. Upload generated [.contract](devot-contract/target/ink/devot_contract.contract) file.
-5. Click Next
-6. Enter names of candidates
-7. Click Next and Upload and Instantiate
+1. Open [https://polkadot.js/apps/contracts](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/contracts/)
+2. Click upload & deploy code
+3. Upload generated [.contract](devot-contract/target/ink/devot_contract.contract) file.
+4. Click Next
+5. Enter names of candidates
+6. Click Deploy and Sign and Submit
 
-Now, you can interact with the deployed contract from the web interface by calling the selected method.
+Now, you can interact with the deployed contract from the web interface by calling messages available from the dropdown
+menu.
 
 ### 3. Crate wallet
 
@@ -74,7 +84,8 @@ Now, you can interact with the deployed contract from the web interface by calli
 2. Create account from the extension
 3. In substrate-contract-node chain, each transaction requires som fees to prevent DoS attack or spam (it is possible to
    turn it off by modifying substrate code). As we are running development node, there are test users with some units.
-   Transfer 10 units from test user to your account from [accounts](https://polkadot.js.org/apps/#/accounts).
+   Transfer 10 units from test user to your account
+   from [accounts](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/accounts).
 
 ### 4. Run dApp
 
@@ -99,21 +110,23 @@ cp .env.example .env
 cp ../devot-contract/target/ink/devot_contract.json ./src/contract/
 ```
 
-5. Copy address of the deployed smart contract from [use.ink](https://ui.use.ink/) and set it as value of
-   VITE_APP_CONTRACT_ADDRESS in the [.env](devot-web/.env) file.
+5. Copy address of the deployed smart contract
+   from [contracts](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/contracts) (click on the contract
+   name and you will see its address) and set it as value of VITE_APP_CONTRACT_ADDRESS in the [.env](devot-web/.env)
+   file.
 
-5. Run the app
+6. Run the app
 
 ```bash
 npm run dev -- --host
 ```
 
-6. Open the app in the browser http://localhost:5174/
-7. Connect your wallet and vote.
-8. Connect to your classmate via exposed ip. Vote on their smart contract and see what happens on the website.
-9. Inspect code of both smart contract and web app to see, what has happened under the hood.
+7. Open the app in the browser http://localhost:5174/
+8. Connect your wallet and vote (you mast have it enabled via the extension).
+9. Connect to your classmate via exposed ip. Vote on their smart contract and see what happens on the website.
+10. Inspect code of both smart contract and web app to see, what has happened under the hood.
 
-If unexpected behaviour happens, open web browser console.
+If unexpected behavior happens, open web browser console and debug.
 
 ## Customize the smart contract
 
@@ -153,8 +166,8 @@ In constructor, initiate list of books you want to put on market.
 cargo contract build
 ```
 
-2. Open [use.ink](https://ui.use.ink/)
-3. Upload .contract file
+2. Open [https://polkadot.js/apps/contracts](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/contracts/)
+3. Click upload .contract file
 4. Set contract name to dBook
 5. Add initial books
 6. Upload the contract
