@@ -89,10 +89,15 @@ async function vote(candidateId: number) {
 
   // sing the transaction and update list of candidates after block is successfully added
   await tx.signAndSend(account.value.address, (res) => {
+    if (res.dispatchError) {
+      throw new Error('Transaction failed: Insufficient balance or other error.');
+    }
     if (res.status.isInBlock || res.status.isFinalized) {
       voted.value = true;
       fetchCandidates();
     }
+  }).catch((error) => {
+    alert(error.message);
   });
 }
 
